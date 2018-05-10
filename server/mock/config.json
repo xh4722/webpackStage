@@ -1,0 +1,42 @@
+{
+    "active": false,
+    "list": {
+        /* 系统同步 */
+        "/setup/sync": {
+            "filename": "sync.js",
+            "active": false
+        },
+        /* 交接班数据 */
+        "/handover/list": {
+            "filename": "handoverData.js",
+            "active": false
+        },
+        /* 交接班记录——详情 */
+        "/handover/detail": {
+            "filename": "handoverData.js",
+            "active": false
+        },
+        /* 获取类目数据 */
+        "/itemcat/getItemcatList": {
+            "filename": "itemStock.js",
+            "key": "itemcats",
+            "active": false
+        },
+        /* 获取商品数据 */
+        "/item/getItemList": {
+            "filename": "itemStock.js",
+            "key": "items",
+            "active": false
+        },
+        /* 获取优惠券数据 */
+        "/coupon/queryCoupons": {
+            "filename": "coupons.js",
+            "active": false
+        },
+        /* 下单获取优惠券数据 */
+        "/coupon/queryPresentCoupon": {
+            "filename": "queryPresentCoupon.js",
+            "active": false
+        }
+    }
+}
