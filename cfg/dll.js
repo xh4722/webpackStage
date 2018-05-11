@@ -5,7 +5,8 @@ const UglifyJsParallelPlugin = require('webpack-uglify-parallel');
 
 // 资源依赖包，提前编译
 const vendors = [
-    'moment'
+    'moment',
+    'reselect'
 ];
 
 module.exports = {

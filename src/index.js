@@ -7,6 +7,8 @@ import createHistory from 'history/createHashHistory';
 import { Route, Router } from 'react-router';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 
+import reducers from './reducers/';
+
 import Home from 'pages/home/';
 
 /* 定义中间件 */
@@ -17,7 +19,10 @@ const middleware = [
 
 /* 定义数据存储对象 */
 const store = createStore(
-    combineReducers({ router: routerReducer }),
+    combineReducers({
+        ...reducers,
+        router: routerReducer
+    }),
     applyMiddleware(...middleware)
 );
 

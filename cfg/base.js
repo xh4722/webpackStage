@@ -22,7 +22,9 @@ module.exports = {
         symlinks: false,
         extensions: ['.js', '.jsx'],
         alias: {
-            pages: `${defaultSettings.srcPath}/pages/`
+            pages: `${defaultSettings.srcPath}/pages/`,
+            actions: `${defaultSettings.srcPath}/actions/`,
+            utils: `${defaultSettings.srcPath}/utils/`
         }
     }
 }

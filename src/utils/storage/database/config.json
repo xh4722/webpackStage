@@ -1,0 +1,24 @@
+{
+    "name": "cashier",
+    "version": 1,
+    "objectStores": [
+        {
+            "name": "trade",
+            "options": {
+                "keyPath": "tid",
+                "autoIncrement": false
+            },
+            "index": [
+                {
+                    "key": "status",
+                    "name": "status",
+                    "options": {
+                        "unique": false
+                    }
+                }
+            ]
+        }, {
+            "name": "logger"
+        }
+    ]
+}
