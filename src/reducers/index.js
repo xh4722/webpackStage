@@ -1,7 +1,5 @@
-import items from './items';
-import times from './times';
+import member from './member';
 
 export default {
-    items,
-    times
+    member
 };

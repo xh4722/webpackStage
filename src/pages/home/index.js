@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 
-import Items from './items';
+import Member from 'pages/member/';
 
 class Home extends Component {
+    componentWillMount() {
+
+    }
+
     render() {
         return (
             <div>
                 Home
-                <Items />
+                <Member />
             </div>
         );
     }

@@ -1,81 +1,62 @@
-import queryString from 'query-string';
+/**
+ * http 请求处理模块
+ * @module HTTP
+ * @author hbp
+ * @date 2018/05/18
+ */
 
+import axios from 'axios';
+import queryString from 'query-string';
 import { extendObject } from 'utils/library';
 
 /**
-* 可中断 Promise
-* @method abortablePromise
-**/
-let abortablePromise = (fetch_promise) => {
-    let abort = null;
-
-    let abort_promise = new Promise((resolve, reject) => {
-        abort = (error) => {
-            return reject(error || {
-                status: -1,
-                message: '请求中断',
-                error: '请求中断'
-            });
-        }
-    });
-
-    /* 使用 Promise.race 模拟中断 */
-    let abortable_promise = Promise.race([
-        fetch_promise,
-        abort_promise
-    ]);
-
-    abortable_promise.abort = abort;
-
-    return abortable_promise;
-};
-
-/**
-* Http 构建对象
-**/
-class Http {
+ * http 请求处理对象
+ * @class HTTP
+ */
+class HTTP {
     constructor(config) {
         this.config = extendObject(true, {
             params: {},
             headers: {},
-            timeout: 15000
+            options: {
+                withCredentials: true,
+                timeout: 15000
+            }
         }, config);
     }
 
     /**
-    * 设置配置信息
-    * @method setConfig
-    * @param {Object} config
-    **/
+     * 设置配置信息
+     * @method setConfig
+     * @param {Object} config
+     */
     setConfig(config) {
         this.config = extendObject(true, {}, this.config, config);
     }
 
     /**
-    * HttpPromise 生成函数
-    * @method createHttpPromise
-    **/
-    createHttpPromise(url, headers) {
-        let timeoutTimer = null;
+     * HttpPromise 生成函数
+     * @method createHttpPromise
+     */
+    createHttpPromise(url, options) {
+        options = {
+            ...this.config.options,
+            ...options
+        };
 
+        // 请求中断函数
+        let abort = () => {};
+        // 请求 promise
         let promise = new Promise((resolve, reject) => {
             /* 发起 fetch 请求 */
-            fetch(url, headers).then((res) => {
-                /* 取消超时定时器 */
-                clearTimeout(timeoutTimer);
-
-                // 请求出错
-                if(!res.ok) {
-                    return reject({
-                        status: -1,
-                        message: res.statusText,
-                        error: res.error || '',
-                        result: res.result
-                    });
-                }
-
-                // 请求解析为 json
-                return res.json();
+            axios({
+                url,
+                ...options,
+                cancelToken: new axios.CancelToken((c) => {
+                    abort = c;
+                })
+            }).then((res) => {
+                return res.data;
             }).then((res) => {
                 // 请求成功
                 if(res.result == 100) {
@@ -97,41 +78,45 @@ class Http {
                         result: res.result
                     });
                 }
-            }).catch(() => {
-                /* 取消超时定时器 */
-                clearTimeout(timeoutTimer);
-
-                return reject({
-                    status: -1,
-                    message: '网络异常，请检查网络后重试',
-                    error: '网络异常，请检查网络后重试'
-                });
+            }).catch((err) => {
+                if(axios.isCancel(err)) {
+                    return reject({
+                        status: -1,
+                        message: '请求中断',
+                        error: '请求中断'
+                    });
+                } else {
+                    return reject({
+                        status: -1,
+                        message: '网络异常，请检查网络后重试',
+                        error: '网络异常，请检查网络后重试'
+                    });
+                }
             });
         });
+        // 添加请求中断函数
+        promise.abort = abort;
 
-        /* promise 封装 */
-        promise = abortablePromise(promise);
-
-        /* 启动超时定时器 */
-        let timeout = this.config.timeout || 0;
-        if(headers && headers.timeout) {
-            timeout = headers.timeout;
-        }
-        timeoutTimer = setTimeout(() => {
-            promise.abort({
-                status: 408,
-                message: '请求超时',
-                error: '请求超时'
-            });
-        }, timeout);
+        // /* 启动超时定时器 */
+        // let timeout = this.config.timeout || 0;
+        // if(headers && headers.timeout) {
+        //     timeout = headers.timeout;
+        // }
+        // timeoutTimer = setTimeout(() => {
+        //     promise.abort({
+        //         status: 408,
+        //         message: '请求超时',
+        //         error: '请求超时'
+        //     });
+        // }, timeout);
 
         return promise;
     }
 
     /**
-    * GET 请求接口
-    * @method get
-    **/
+     * GET 请求接口
+     * @method get
+     */
     get(url, params, headers) {
         params = extendObject(true, {},
             this.config.params, params || {});
@@ -156,17 +141,14 @@ class Http {
 
         return this.createHttpPromise(url, {
             method: 'GET',
-            mode: 'cors',
-            compress: true,
-            headers: headers,
-            credentials: 'include'
+            headers
         });
     }
 
     /**
-    * POST 请求接口
-    * @method post
-    **/
+     * POST 请求接口
+     * @method post
+     */
     post(url, params, headers) {
         params = extendObject(true, {},
             this.config.params, params || {});
@@ -175,13 +157,10 @@ class Http {
 
         return this.createHttpPromise(url, {
             method: 'POST',
-            mode: 'cors',
-            compress: true,
-            headers: headers,
-            credentials: 'include',
-            body: params ? queryString.stringify(params) : ''
+            headers,
+            data: params ? queryString.stringify(params) : ''
         });
     }
 }
 
-export default Http;
+export default HTTP;

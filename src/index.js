@@ -7,6 +7,9 @@ import createHistory from 'history/createHashHistory';
 import { Route, Router } from 'react-router';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 
+import thunk from './redux-middleware/redux-thunk';
+import logger from './redux-middleware/redux-logger';
+
 import reducers from './reducers/';
 
 import Home from 'pages/home/';
@@ -14,7 +17,9 @@ import Home from 'pages/home/';
 /* 定义中间件 */
 const history = createHistory();
 const middleware = [
-    routerMiddleware(history)
+    thunk,
+    routerMiddleware(history),
+    logger
 ];
 
 /* 定义数据存储对象 */

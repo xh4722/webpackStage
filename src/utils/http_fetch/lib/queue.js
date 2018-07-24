@@ -19,6 +19,20 @@ class Queue {
     }
 
     /**
+    * url 相关请求中断函数
+    * @method abortUrl
+    * @param {String} url
+    **/
+    abortUrl(url) {
+        /* 中断所有相关 url 的请求 */
+        this.list.forEach((req) => {
+            if(req.url == url) {
+                req.abort && req.abort();
+            }
+        });
+    }
+
+    /**
     * 查找 url 队列
     * @method getUrlList
     * @param {String} url

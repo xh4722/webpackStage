@@ -1,7 +1,7 @@
-import * as items from './items';
-import * as times from './times';
+import * as member from './member';
+
+export const MemberAction = member;
 
 export default {
-    items,
-    times
+    member
 };

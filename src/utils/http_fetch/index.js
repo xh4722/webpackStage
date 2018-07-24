@@ -25,6 +25,21 @@ class HttpManager extends EventEmitter {
     * @param {Object} requestConfig
     **/
     bindRequest(promise, requestConfig) {
+        /* 封装 abort 中断函数 */
+        let originAbort = promise.abort.bind(promise);
+        requestConfig.abort = promise.abort = (err) => {
+            originAbort(err);
+
+            /* 拦截超时请求 */
+            if(err.status == 408) {
+                // 触发请求超时事件
+                this.emit('timeout', requestConfig);
+            }
+
+            // 触发请求中断事件
+            this.emit('abort', requestConfig);
+        }
+
         /* 生成请求对象 */
         let request = new Request(requestConfig);
         // 将请求对象保存到队列中
@@ -32,6 +47,8 @@ class HttpManager extends EventEmitter {
 
         // 绑定 request 的 key
         promise.requestKey = request.key;
+        // 覆盖 promise 的中断函数（使 promise 的中断也会触发队列的中断事件）
+        promise.abort = request.abort;
 
         /* 请求结束以后自动删除队列中的请求 */
         promise.finally(() => {
@@ -125,8 +142,5 @@ class HttpManager extends EventEmitter {
 export default new HttpManager({
     headers: {
         'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
-    },
-    options: {
-        baseUrl: 'http://syclient-test.kuaimai.com'
     }
 });
