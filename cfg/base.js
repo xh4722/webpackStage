@@ -19,7 +19,6 @@ module.exports = {
         noInfo: false
     },
     resolve: {
-        symlinks: false,
         extensions: ['.js', '.jsx'],
         alias: {
             pages: `${defaultSettings.srcPath}/pages/`,

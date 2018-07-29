@@ -28,7 +28,7 @@ function buildConfig(wantedEnv) {
     /* 加载主显配置文件 */
     let configMap = {
         'development' : 'dev',
-        'production'  : 'dist',
+        'production'  : 'product',
         'gray'        : 'gray',
         'dll'         : 'dll',
         'test'        : 'test'

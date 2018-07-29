@@ -14,6 +14,9 @@ import reducers from './reducers/';
 
 import Home from 'pages/home/';
 
+import * as OfflinePluginRuntime from 'offline-plugin/runtime';
+OfflinePluginRuntime.install();
+
 /* 定义中间件 */
 const history = createHistory();
 const middleware = [

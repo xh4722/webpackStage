@@ -35,6 +35,9 @@ const extractLESS = new ExtractTextPlugin({
     allChunks: true
 });
 
+/* 离线应用插件 */
+const OfflinePlugin = require('offline-plugin');
+
 /**
 * 获取默认插件
 * @method getDefaultPlugins
@@ -99,7 +102,8 @@ function getProductionPlugins() {
             template: './src/index_tpl.html',
             chunks: ['manifest', 'vendor.dll', 'app'],
             chunksSortMode: 'dependency'
-        })
+        }),
+        new OfflinePlugin()
     ];
 }
 

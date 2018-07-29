@@ -8,9 +8,9 @@ let config = Object.assign({}, baseConfig, {
         app: [
             'babel-polyfill',
             path.resolve(__dirname, '../src/index')
-        ],
-        devtool: defaultSettings.productionSourceMap ? 'hidden-source-map' : false,
+        ]
     },
+    devtool: defaultSettings.productionSourceMap ? 'hidden-source-map' : false,
     output: {
         path: path.join(__dirname, '../dist/'),
         filename: '[name].[chunkhash:8].js',
