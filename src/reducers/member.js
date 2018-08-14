@@ -1,16 +1,26 @@
+import { handleActions, combineActions } from 'redux-actions';
 import { MemberAction } from 'actions';
 
-const initialState = null;
+let { getMember, getMemberFail, getMemberSuccess } = MemberAction;
 
-export default (state = initialState, action) => {
-    switch(action.type) {
-        case MemberAction.GET_MEMBER_SUCCEEDED: {
-            let newState = Object.assign({}, action.payload);
-            return newState;
-        }
-
-        default: {
-            return state;
-        }
+export default handleActions({
+    [getMember]: (state, action) => {
+        console.log('查询会员...');
+        return Object.assign({
+            isFetching: true
+        }, {
+            data: action.payload
+        });
+    },
+    [combineActions(getMemberFail, getMemberSuccess)]: (state, action) => {
+        console.log('会员查询完成...');
+        return Object.assign({
+            isFetching: false
+        }, {
+            data: action.payload
+        });
     }
-}
+}, {
+    isFetching: false,
+    data: null
+});

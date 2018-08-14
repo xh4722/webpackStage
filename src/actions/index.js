@@ -1,4 +1,4 @@
-import * as member from './member';
+import member from './member';
 
 export const MemberAction = member;
 

@@ -6,7 +6,16 @@ const UglifyJsParallelPlugin = require('webpack-uglify-parallel');
 // 资源依赖包，提前编译
 const vendors = [
     'moment',
-    'reselect'
+    'reselect',
+    'react',
+    'react-dom',
+    'react-redux',
+    'react-router',
+    'react-router-dom',
+    'react-router-redux',
+    'redux',
+    'redux-actions',
+    'redux-saga'
 ];
 
 module.exports = {
