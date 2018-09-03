@@ -1,7 +1,7 @@
-import member from './member';
+import member from './member'
 
-export const MemberAction = member;
+export const MemberAction = member
 
 export default {
-    member
-};
+  member,
+}

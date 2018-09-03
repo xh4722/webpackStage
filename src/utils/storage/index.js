@@ -1,10 +1,10 @@
-import StorageClass from './storage';
-import DatabaseClass from './database/';
+import StorageClass from './storage'
+import DatabaseClass from './database/'
 
-export const Storage = new StorageClass();
-export const Database = new DatabaseClass();
+export const Storage = new StorageClass()
+export const Database = new DatabaseClass()
 
 export default {
-    Storage,
-    Database
+  Storage,
+  Database,
 }

@@ -1,5 +1,5 @@
-import member from './member';
+import member from './member'
 
 export default {
-    member
-};
+  member,
+}

@@ -1,6 +1,6 @@
-import { takeEvery, put, call, select } from 'redux-saga/effects';
+import { takeEvery, put, call, select } from 'redux-saga/effects'
 
-import { MemberAction } from 'actions';
+import { MemberAction } from 'actions'
 
 /**
  * 查询会员信息
@@ -8,22 +8,20 @@ import { MemberAction } from 'actions';
  * @param { Object } action
  */
 function* getMember(action) {
-    let data = yield call(() => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                let data = {
-                    name: '李雷',
-                    mobile: action.payload.mobile
-                };
+  let data = yield call(() => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        let data = {
+          name: '李雷',
+          mobile: action.payload.mobile,
+        }
 
-                resolve(data);
-            }, 2000);
-        });
-    });
+        resolve(data)
+      }, 2000)
+    })
+  })
 
-    yield put(MemberAction.getMemberSuccess(data));
+  yield put(MemberAction.getMemberSuccess(data))
 }
 
-export default [
-    takeEvery(MemberAction.getMember, getMember),
-];
+export default [takeEvery(MemberAction.getMember, getMember)]
