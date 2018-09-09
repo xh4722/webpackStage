@@ -1,22 +1,9 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import customConnect from 'utils/connect/'
 
-import { MemberAction } from 'actions'
-
-const mapStateToProps = state => ({
-  member: state.member,
-})
-
-const mapDispatchToProps = dispatch => ({
-  getMember: args => dispatch(MemberAction.getMember(args)),
-})
-
-//@connect(mapStateToProps, mapDispatchToProps)
 @customConnect(({ member }) => ({ member }))
 export default class Member extends React.Component {
   componentWillMount() {
-    console.log(this.props.member.isFetching)
     this.props.member.getMember({
       mobile: '1234567890123',
     })

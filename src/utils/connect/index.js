@@ -2,31 +2,12 @@
 
 import customConnect from './customConnect'
 
-import { MemberAction } from 'actions'
-
-class MemberWrapper {
-  constructor(props, dispatch) {
-    this.props = props
-    this.dispatch = dispatch
-  }
-
-  get isFetching() {
-    return this.props.isFetching
-  }
-
-  get data() {
-    return this.props.data
-  }
-
-  getMember(args) {
-    this.dispatch(MemberAction.getMember(args))
-  }
-}
+import Ctrl from 'controller'
 
 const mergeProps = ({ state }, { dispatch }) => {
   const { member: memberState } = state
 
-  let member = new MemberWrapper(memberState, dispatch)
+  let member = new Ctrl.member(memberState, dispatch)
 
   return {
     member,
