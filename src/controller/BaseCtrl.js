@@ -1,3 +1,5 @@
+import store from 'store'
+
 /**
  * model 代理器
  * @method connect
@@ -23,6 +25,9 @@ function connect(model) {
  */
 class BaseCtrl {
   constructor(props) {
+    this._originState = props
+    // 绑定 dispatch
+    this.dispatch = store.dispatch
     // 绑定 model
     connect(props)(this)
   }

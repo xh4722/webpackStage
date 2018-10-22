@@ -21,10 +21,12 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      pages: `${defaultSettings.srcPath}/pages/`,
-      actions: `${defaultSettings.srcPath}/actions/`,
-      utils: `${defaultSettings.srcPath}/utils/`,
-      controller: `${defaultSettings.srcPath}/controller/`,
+      pages: `${defaultSettings.srcPath}/pages`,
+      actions: `${defaultSettings.srcPath}/actions`,
+      utils: `${defaultSettings.srcPath}/utils`,
+      store: `${defaultSettings.srcPath}/store`,
+      connect: `${defaultSettings.srcPath}/store/connect`,
+      controller: `${defaultSettings.srcPath}/controller`,
     },
   },
 }

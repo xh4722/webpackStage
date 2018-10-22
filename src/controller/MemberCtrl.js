@@ -6,10 +6,8 @@ import BaseCtrl from './BaseCtrl'
  * @class MemberCtrl
  */
 class MemberCtrl extends BaseCtrl {
-  constructor(props, dispatch) {
+  constructor(props) {
     super(props)
-
-    this.dispatch = dispatch
   }
 
   /**
@@ -18,19 +16,31 @@ class MemberCtrl extends BaseCtrl {
    */
   getMember(args) {
     // 派发 action：会员查询
-    this.dispatch(MemberAction.getMember())
+    this.dispatch(MemberAction.get())
 
     // 处理异步逻辑
     setTimeout(() => {
       let data = {
         name: '李雷',
         mobile: args.mobile,
+        vipInfo: {
+          level: 1,
+        },
       }
 
       // 派发 action：会员查询成功
-      this.dispatch(MemberAction.getMemberSuccess(data))
+      this.dispatch(MemberAction.getSuccess(data))
     }, 2000)
   }
+
+  setName(name) {
+    this.dispatch(MemberAction.setName(name))
+  }
 }
+
+const test1 = new MemberCtrl({})
+const test2 = new MemberCtrl({})
+console.log(test1.hasOwnProperty('getMember'))
+console.log(test1.getMember === test2.getMember)
 
 export default MemberCtrl

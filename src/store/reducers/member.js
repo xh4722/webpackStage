@@ -1,11 +1,11 @@
 import { handleActions, combineActions } from 'redux-actions'
 import { MemberAction } from 'actions'
 
-let { getMember, getMemberFail, getMemberSuccess } = MemberAction
+let { get, getFail, getSuccess, setName } = MemberAction
 
 export default handleActions(
   {
-    [getMember]: (state, action) => {
+    [get]: (state, action) => {
       return Object.assign(
         {
           isFetching: true,
@@ -15,7 +15,17 @@ export default handleActions(
         }
       )
     },
-    [combineActions(getMemberFail, getMemberSuccess)]: (state, action) => {
+    [setName]: (state, action) => {
+      console.log(action)
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          name: action.payload,
+        },
+      }
+    },
+    [combineActions(getFail, getSuccess)]: (state, action) => {
       return Object.assign(
         {
           isFetching: false,
