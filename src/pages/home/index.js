@@ -1,18 +1,12 @@
 import React, { Component } from 'react'
+import FileManager from './FileManager'
 
-import Member from 'pages/member/'
-
-class Home extends Component {
-  componentWillMount() {}
-
+export default class Home extends Component {
   render() {
     return (
       <div>
-        Home
-        <Member />
+        <FileManager />
       </div>
     )
   }
 }
-
-export default Home
