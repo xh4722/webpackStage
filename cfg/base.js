@@ -25,8 +25,10 @@ module.exports = {
       actions: `${defaultSettings.srcPath}/actions`,
       utils: `${defaultSettings.srcPath}/utils`,
       store: `${defaultSettings.srcPath}/store`,
+      mock: `${defaultSettings.srcPath}/mock`,
       connect: `${defaultSettings.srcPath}/store/connect`,
       controller: `${defaultSettings.srcPath}/controller`,
+      components: `${defaultSettings.srcPath}/components`,
     },
   },
 }

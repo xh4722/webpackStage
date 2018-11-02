@@ -19,4 +19,9 @@ module.exports = {
     '@babel/plugin-transform-runtime',
     ['import', { libraryName: 'antd', style: 'css' }],
   ],
+  env: {
+    dev: {
+      plugins: ['react-hot-loader/babel'],
+    },
+  },
 }

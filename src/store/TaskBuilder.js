@@ -15,7 +15,9 @@ export default class TaskBuilder {
   entries = []
 
   @observable
-  resource = null
+  software = {
+    name: 'Abaqus',
+  }
 
   @observable
   deps = []
@@ -30,5 +32,32 @@ export default class TaskBuilder {
   @action
   uploadFile(file) {
     this.files.push(file)
+  }
+
+  /**
+   * 选择软件
+   * @method selectSoftware
+   */
+  @action
+  selectSoftware(software) {
+    this.software = software
+  }
+
+  /**
+   * 上传依赖脚本
+   * @method uploadDep
+   */
+  @action
+  uploadDep(dep) {
+    this.deps.push(dep)
+  }
+
+  /**
+   * 上传脚本文件
+   * @method uploadScript
+   */
+  @action
+  uploadScript(script) {
+    this.scripts.push(script)
   }
 }

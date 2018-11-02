@@ -1,33 +1,22 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react'
 import { Button } from 'antd'
-import { taskBuilder } from 'store'
-import { onUploadFile } from 'controller/taskBuilder'
 
+import { ListPanel } from 'components'
+import { taskBuilder } from 'store'
+
+import FileUploader from './FileUploader'
+import model from './model'
 import style from './index.scss'
 
-@observer
-export default class FileUploader extends Component {
-  /**
-   * 上传文件
-   * @method onUpload
-   */
-  onUpload = () => {
-    onUploadFile({
-      name: 'test',
-    })
-  }
+export default observer(function FileManager() {
+  return (
+    <div className={style.FileUploader}>
+      <h2>文件上传</h2>
+      <Button onClick={model.showModal}>上传文件</Button>
+      <ListPanel list={taskBuilder.files.map(item => item.name)} />
 
-  render() {
-    return (
-      <div className={style.FileUploader}>
-        <Button onClick={this.onUpload}>上传文件</Button>
-        <ul>
-          {taskBuilder.files.map(file => (
-            <li>{file.name}</li>
-          ))}
-        </ul>
-      </div>
-    )
-  }
-}
+      <FileUploader visible={model.visible} hideModal={model.hideModal} />
+    </div>
+  )
+})

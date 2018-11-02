@@ -1,11 +1,9 @@
-import { BehaviorSubject } from 'rxjs'
-import { taskBuilder } from 'store'
+import UploadFileCtrl from './uploadFile'
+import SelectSoftwareCtrl from './selectSoftware'
+import UploadDepCtrl from './uploadDep'
+import UploadScriptCtrl from './uploadScript'
 
-const uploadSubject$ = new BehaviorSubject(null)
-uploadSubject$.subscribe(file => {
-  file && taskBuilder.uploadFile(file)
-})
-
-export const onUploadFile = file => {
-  uploadSubject$.next(file)
-}
+export const UploadFile = UploadFileCtrl
+export const SelectSoftware = SelectSoftwareCtrl
+export const UploadDep = UploadDepCtrl
+export const UploadScript = UploadScriptCtrl
